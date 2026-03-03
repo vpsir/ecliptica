@@ -59,7 +59,7 @@ export async function checkLunarEclipse(date: Date, lat: number, lon: number) {
     );
     console.log(message);
 
-    const contacts = await solveLunarEclipse(date);
+    const contacts = await solveLunarEclipse(date, lat, lon);
     console.log("P1:", contacts.p1);
     console.log("U1:", contacts.u1);
     console.log("U2:", contacts.u2);

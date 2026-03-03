@@ -4,6 +4,8 @@ import { lunarShadowStateAt } from "./shadowState";
 import { findMaximumEclipse } from "./findMax";
 import { solveRoot } from "./rootSolver";
 import type { LunarContacts } from "./types";
+import { computeLunarMagnitude } from "./magnitude";
+import { evaluateVisibility } from "./visibility";
 
 async function getNearestFullMoon(date: Date): Promise<Date> {
     const toi = createTimeOfInterest.fromDate(date);
@@ -24,7 +26,7 @@ async function getNearestFullMoon(date: Date): Promise<Date> {
     return diffPrev < diffNext ? prevFull : nextFull;
 }
 
-export async function solveLunarEclipse(date: Date): Promise<LunarContacts> {
+export async function solveLunarEclipse(date: Date, lat: number, lon: number): Promise<LunarContacts> {
 
     const fullMoon = await getNearestFullMoon(date);
     const maxApprox = await findMaximumEclipse(fullMoon);
@@ -129,6 +131,35 @@ export async function solveLunarEclipse(date: Date): Promise<LunarContacts> {
         endTime,
         stepMs
     );
+
+    // Compute magnitude at MAX
+    if (contacts.max) {
+        const stateAtMax = await lunarShadowStateAt(contacts.max);
+
+        const magnitude = computeLunarMagnitude(
+            stateAtMax.shadowDistance,
+            stateAtMax.moonRadius,
+            stateAtMax.umbraRadius,
+            stateAtMax.penumbraRadius
+        );
+
+        contacts["umbralMagnitude"] = magnitude.umbralMagnitude;
+        contacts["penumbralMagnitude"] = magnitude.penumbralMagnitude;
+    }
+
+    if (lat !== undefined && lon !== undefined) {
+        const {
+            p1, u1, u2, max, u3, u4, p4
+        } = contacts;
+
+        const visibility = await evaluateVisibility(
+            { p1, u1, u2, max, u3, u4, p4 },
+            lat,
+            lon
+        );
+
+        contacts.visibility = visibility;
+    }
 
     return contacts;
 }
