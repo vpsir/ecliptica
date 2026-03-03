@@ -1,5 +1,7 @@
 import { getSunAndMoon } from "./astro";
 import { angularSeparationDeg } from "./separation";
+import { normalizeAngle } from "./utils";
+import { classifyEclipse } from "./classify";
 
 (async function () {
     const date = new Date();
@@ -21,7 +23,34 @@ import { angularSeparationDeg } from "./separation";
 
     console.log("Sun-Moon Angular Separation:", sep.toFixed(2), "°");
 
-    // Now this works correctly
     const moonEcl = await moonObj.getApparentGeocentricEclipticSphericalCoordinates();
     console.log("Moon Ecliptic Latitude:", moonEcl.lat);
+
+    const moonAngularDiameter = await moonObj.getAngularDiameter();
+
+    const moonRadius = moonAngularDiameter / 2;
+    console.log("Moon Angular Radius:", moonRadius);
+
+    const umbraRadius = 0.727; // degrees (good first approximation)
+
+    const shadowRA = normalizeAngle(sunEqu.rightAscension + 180);
+    const shadowDec = -sunEqu.declination;
+
+    const shadowDistance = angularSeparationDeg(
+        shadowRA,
+        shadowDec,
+        moonEqu.rightAscension,
+        moonEqu.declination
+    );
+    console.log("Distance from Umbra Center:", shadowDistance);
+
+    const message = classifyEclipse(
+        sep,
+        moonEcl.lat,
+        shadowDistance,
+        moonRadius,
+        umbraRadius
+    );
+    console.log(message);
+
 })();

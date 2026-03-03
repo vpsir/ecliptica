@@ -13,3 +13,7 @@ export function angularSeparation(
         Math.cos(d1) * Math.cos(d2) * Math.cos(a1 - a2)
     );
 }
+
+export function normalizeAngle(deg: number) {
+    return (deg + 360) % 360;
+}
