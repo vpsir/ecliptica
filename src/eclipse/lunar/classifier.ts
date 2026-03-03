@@ -52,3 +52,24 @@ export function classifyLunarEclipse(
 
     return "🔴 Total lunar eclipse occurring, but Moon is below horizon at this location.";
 }
+
+export function classifyMagnitude(umbralMag?: number): string {
+
+    if (umbralMag === undefined || umbralMag < 0) {
+        return "No umbral eclipse";
+    }
+
+    if (umbralMag === 0) {
+        return "Penumbral lunar eclipse";
+    }
+
+    if (umbralMag > 0 && umbralMag < 1) {
+        return "Partial lunar eclipse";
+    }
+
+    if (umbralMag >= 1) {
+        return "Total lunar eclipse";
+    }
+
+    return "Unknown classification";
+}

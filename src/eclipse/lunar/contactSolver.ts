@@ -6,6 +6,8 @@ import { solveRoot } from "./rootSolver";
 import type { LunarContacts } from "./types";
 import { computeLunarMagnitude } from "./magnitude";
 import { evaluateVisibility } from "./visibility";
+import { computeLunarDurations } from "./duration";
+import { classifyMagnitude } from "./classifier";
 
 async function getNearestFullMoon(date: Date): Promise<Date> {
     const toi = createTimeOfInterest.fromDate(date);
@@ -160,6 +162,15 @@ export async function solveLunarEclipse(date: Date, lat: number, lon: number): P
 
         contacts.visibility = visibility;
     }
+
+    // Durations
+    const durations = computeLunarDurations(contacts);
+    contacts["durations"] = durations;
+
+    // Classification
+    contacts["classification"] = classifyMagnitude(
+        contacts.umbralMagnitude
+    );
 
     return contacts;
 }

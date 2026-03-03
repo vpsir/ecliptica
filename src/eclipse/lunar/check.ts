@@ -67,4 +67,8 @@ export async function checkLunarEclipse(date: Date, lat: number, lon: number) {
     console.log("U3:", contacts.u3);
     console.log("U4:", contacts.u4);
     console.log("P4:", contacts.p4);
+    console.log("Umbral Magnitude at MAX:", contacts.umbralMagnitude);
+    console.log("Penumbral Magnitude at MAX:", contacts.penumbralMagnitude);
+    console.log("Durations:", contacts.durations);
+    console.log("Classification:", contacts.classification);
 }

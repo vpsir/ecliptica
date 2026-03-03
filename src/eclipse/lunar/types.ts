@@ -12,4 +12,13 @@ export type LunarContacts = LunarContactTimes & {
     umbralMagnitude?: number
     penumbralMagnitude?: number
     visibility?: Record<string, boolean>
+    durations?: {
+        totalDurationSeconds?: number
+        umbralDurationSeconds?: number
+        totalityDurationSeconds?: number
+        totalDuration?: string
+        umbralDuration?: string
+        totalityDuration?: string
+    }
+    classification?: string
 }
