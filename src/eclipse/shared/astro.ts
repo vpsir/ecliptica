@@ -5,8 +5,8 @@ import { createMoon } from "astronomy-bundle/moon";
 export async function getSunAndMoon(date: Date) {
     const toi = createTimeOfInterest.fromDate(date);
 
-    const sunObj = createSun(toi);
-    const moonObj = createMoon(toi);
+    const sun = createSun(toi);
+    const moon = createMoon(toi);
 
-    return {sunObj, moonObj};
+    return {sun, moon};
 }
