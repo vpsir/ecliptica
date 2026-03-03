@@ -22,11 +22,11 @@ export async function getUmbraAndPenumbraRadii(sun: Sun, moon: Moon): Promise<{ 
     const umbraRadius = toDeg(Math.asin(umbraRadiusKm / moonDistanceKm));
     const penumbraRadius = toDeg(Math.asin(penumbraRadiusKm / moonDistanceKm));
 
-    console.log("sunDistanceAU:", sunDistanceAU);
-    console.log("sunDistanceKm:", sunDistanceKm);
-    console.log("moonDistanceKm:", moonDistanceKm);
-    console.log("umbraRadiusKm:", umbraRadiusKm);
-    console.log("ratio:", umbraRadiusKm / moonDistanceKm);
+    // console.log("sunDistanceAU:", sunDistanceAU);
+    // console.log("sunDistanceKm:", sunDistanceKm);
+    // console.log("moonDistanceKm:", moonDistanceKm);
+    // console.log("umbraRadiusKm:", umbraRadiusKm);
+    // console.log("ratio:", umbraRadiusKm / moonDistanceKm);
 
     return { umbraRadius, penumbraRadius };
 }

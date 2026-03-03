@@ -3,6 +3,7 @@ import { angularSeparationDeg } from "../shared/angularSeparation";
 import { classifyLunarEclipse } from "./classifier";
 import { createLocation } from "astronomy-bundle/earth";
 import { getUmbraAndPenumbraRadii } from "./geometry";
+import { solveLunarEclipse } from "./contactSolver";
 
 
 export async function checkLunarEclipse(date: Date, lat: number, lon: number) {
@@ -57,4 +58,13 @@ export async function checkLunarEclipse(date: Date, lat: number, lon: number) {
         moonAltitude
     );
     console.log(message);
+
+    const contacts = await solveLunarEclipse(date);
+    console.log("P1:", contacts.p1);
+    console.log("U1:", contacts.u1);
+    console.log("U2:", contacts.u2);
+    console.log("MAX:", contacts.max);
+    console.log("U3:", contacts.u3);
+    console.log("U4:", contacts.u4);
+    console.log("P4:", contacts.p4);
 }
